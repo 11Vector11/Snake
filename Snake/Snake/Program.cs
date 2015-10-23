@@ -14,7 +14,7 @@ namespace Snake
             Console.SetBufferSize(80, 25);
 
             Wall walls = new Wall(80, 25);
-            walls.Draw(); 
+            walls.Draw();
 
             //Отрисовка точек
             Point p = new Point(4, 5, '*');
@@ -27,12 +27,12 @@ namespace Snake
 
             while (true)
             {
-                if(walls.IsHit(snake) || snake.IsHitTail())
+                if (walls.IsHit(snake) || snake.IsHitTail())
                 {
                     break;
                 }
 
-                if(snake.Eat(food))
+                if (snake.Eat(food))
                 {
                     food = foodCreator.CreateFood();
                     food.Draw();
@@ -48,9 +48,25 @@ namespace Snake
                     ConsoleKeyInfo key = Console.ReadKey();
                     snake.HandleKey(key.Key);
                 }
-                Thread.Sleep(100);
-                snake.Move();
             }
-        }
+            WriteGameOver();
+            Console.ReadLine();
+        }                     
+            static void WriteGameOver()
+            { 
+                int xOffset = 35;
+                int yOffset = 9;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.SetCursorPosition(xOffset, yOffset++);
+                WriteText("=======", xOffset, yOffset++);
+                WriteText("D E D", xOffset + 1, yOffset++);
+                WriteText("=======", xOffset, yOffset++);
+            }
+            
+            static void WriteText(String text, int xOffset, int yOffset)
+            {
+                Console.SetCursorPosition(xOffset, yOffset);
+                Console.WriteLine(text);
+            }
     }
 }
